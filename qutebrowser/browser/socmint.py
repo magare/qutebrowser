@@ -146,7 +146,7 @@ def _format_phone_number(phone: str) -> Dict[str, str]:
 
 
 @cmdutils.register()
-@cmdutils.argument('identifier', completion=usertypes.Completion.none)
+# @cmdutils.argument('identifier', completion=usertypes.Completion.none)
 def pivot(identifier: str) -> None:
     """Perform identifier pivoting across multiple platforms.
     
@@ -190,9 +190,9 @@ def pivot(identifier: str) -> None:
 
 
 @cmdutils.register()
-@cmdutils.argument('platform', completion=usertypes.Completion.none,
-                   choices=sorted(PLATFORM_SEARCH_URLS.keys()))
-@cmdutils.argument('query', completion=usertypes.Completion.none)
+# @cmdutils.argument('platform', completion=usertypes.Completion.none,
+#                    choices=sorted(PLATFORM_SEARCH_URLS.keys()))
+# @cmdutils.argument('query', completion=usertypes.Completion.none)
 def platform_search(platform: str, query: str) -> None:
     """Search within a specific social media platform.
     
@@ -217,8 +217,8 @@ def platform_search(platform: str, query: str) -> None:
 
 
 @cmdutils.register()
-@cmdutils.argument('name', completion=usertypes.Completion.none)
-@cmdutils.argument('context', completion=usertypes.Completion.none)
+# @cmdutils.argument('name', completion=usertypes.Completion.none)
+# @cmdutils.argument('context', completion=usertypes.Completion.none)
 def csearch(name: str, *context: str) -> None:
     """Perform contextual name search combining name with context.
     
@@ -283,7 +283,7 @@ def syncprep() -> None:
 
 
 @cmdutils.register()
-@cmdutils.argument('phone', completion=usertypes.Completion.none)
+# @cmdutils.argument('phone', completion=usertypes.Completion.none)
 def revphone(phone: str) -> None:
     """Perform reverse phone lookup across multiple services.
     
@@ -334,7 +334,7 @@ def revphone(phone: str) -> None:
 
 
 @cmdutils.register()
-@cmdutils.argument('email', completion=usertypes.Completion.none)
+# @cmdutils.argument('email', completion=usertypes.Completion.none)
 def revemail(email: str) -> None:
     """Perform reverse email lookup across multiple services.
     
