@@ -4080,6 +4080,71 @@ bindings.commands:
     * register: Entered when qutebrowser is waiting for a register name/key for
       commands like `:set-mark`.
 
+## osint
+
+osint.open_tabs_background:
+  default: true
+  type: Bool
+  desc: >-
+    Open OSINT search result tabs in the background.
+    When enabled, new tabs from OSINT commands will open in the background,
+    allowing you to continue working while results load.
+
+osint.max_tabs_per_search:
+  default: 10
+  type:
+    name: Int
+    minval: 1
+    maxval: 50
+  desc: >-
+    Maximum number of tabs to open per OSINT search command.
+    Limits the number of tabs that can be opened by a single OSINT command
+    to prevent overwhelming the browser.
+
+osint.trade_data_sources:
+  default:
+    - importyeti
+    - panjiva
+    - zauba
+    - volza
+    - seair
+  type:
+    name: List
+    valtype: String
+  desc: >-
+    List of trade data sources to use for trade lookups.
+    Available sources: importyeti, panjiva, zauba, volza, seair
+
+osint.vulnerability_databases:
+  default:
+    - nvd
+    - mitre
+    - vulners
+    - cvedetails
+    - snyk
+  type:
+    name: List
+    valtype: String
+  desc: >-
+    List of vulnerability databases to search for CVE lookups.
+    Available sources: nvd, mitre, vulners, cvedetails, snyk
+
+osint.enable_auto_vendor_scan:
+  default: false
+  type: Bool
+  desc: >-
+    Automatically scan vendor mentions on privacy/terms pages.
+    When enabled, the vendor-map command will automatically extract and
+    analyze vendor names from scanned pages.
+
+osint.graph_api_endpoint:
+  default: ""
+  type: String
+  desc: >-
+    API endpoint for external graph database integration.
+    Set this to your graph database API URL to enable export-node and
+    graph-query commands. Example: http://localhost:8080/api/graph
+
 ## logging
 
 logging.level.ram:

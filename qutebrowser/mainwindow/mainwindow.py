@@ -382,16 +382,29 @@ class MainWindow(QWidget):
     def _init_command_dispatcher(self):
         # Lazy import to avoid circular imports
         from qutebrowser.browser import commands
+        from qutebrowser.browser import osint_commands
+        
         self._command_dispatcher = commands.CommandDispatcher(
             self.win_id, self.tabbed_browser)
         objreg.register('command-dispatcher',
                         self._command_dispatcher,
                         command_only=True,
                         scope='window', window=self.win_id)
+        
+        # Initialize OSINT commands
+        self._osint_dispatcher = osint_commands.OSINTCommands(
+            self.win_id, self.tabbed_browser)
+        objreg.register('osint-commands',
+                        self._osint_dispatcher,
+                        command_only=True,
+                        scope='window', window=self.win_id)
 
         widget = self.tabbed_browser.widget
         widget.destroyed.connect(
             functools.partial(objreg.delete, 'command-dispatcher',
+                              scope='window', window=self.win_id))
+        widget.destroyed.connect(
+            functools.partial(objreg.delete, 'osint-commands',
                               scope='window', window=self.win_id))
 
     def __repr__(self):
