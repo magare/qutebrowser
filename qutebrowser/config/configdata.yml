@@ -4159,3 +4159,167 @@ logging.level.console:
   desc: >-
     Level for console (stdout/stderr) logs.
     Ignored if the `--loglevel` or `--debug` CLI flags are used.
+
+## Privacy Protection Features
+
+privacy.enabled:
+  type: Bool
+  default: false
+  desc: >-
+    Enable privacy protection features globally.
+    When enabled, activates various anti-tracking and anti-fingerprinting measures.
+
+privacy.timestamp_obfuscation:
+  type: Bool
+  default: false
+  desc: >-
+    Add random delays to network requests to prevent timing analysis attacks.
+    This may slightly impact browsing performance.
+
+privacy.user_agent_rotation:
+  type: Bool
+  default: false
+  desc: >-
+    Randomly rotate user agent strings to prevent browser fingerprinting.
+    Changes user agent periodically and per-domain.
+
+privacy.user_agent_profile:
+  type:
+    name: String
+    valid_values:
+      - windows_chrome: Windows Chrome user agents
+      - windows_firefox: Windows Firefox user agents
+      - mac_safari: macOS Safari user agents
+      - linux_firefox: Linux Firefox user agents
+  default: windows_chrome
+  desc: User agent profile to use for rotation.
+
+privacy.header_sanitization:
+  type: Bool
+  default: false
+  desc: >-
+    Remove tracking headers from HTTP requests.
+    Strips headers like X-Client-Data, X-Device-Id, etc.
+
+privacy.canvas_protection:
+  type: Bool
+  default: false
+  desc: >-
+    Add noise to canvas fingerprinting to prevent tracking.
+    May cause minor visual artifacts in canvas-based applications.
+
+privacy.webgl_protection:
+  type: Bool
+  default: false
+  desc: >-
+    Spoof WebGL vendor and renderer information.
+    Returns generic values to prevent GPU fingerprinting.
+
+privacy.font_blocking:
+  type: Bool
+  default: false
+  desc: >-
+    Block font enumeration to prevent fingerprinting.
+    May affect font rendering on some websites.
+
+privacy.resolution_spoofing:
+  type: Bool
+  default: false
+  desc: >-
+    Spoof screen resolution to common values.
+    Reports 1920x1080 regardless of actual screen size.
+
+privacy.spoofed_resolution:
+  type:
+    name: String
+    valid_values:
+      - 1920x1080: Full HD
+      - 1366x768: Common laptop resolution
+      - 2560x1440: 2K resolution
+      - 3840x2160: 4K resolution
+  default: 1920x1080
+  desc: Resolution to report when spoofing is enabled.
+
+privacy.cookie_compartmentalization:
+  type: Bool
+  default: false
+  desc: >-
+    Isolate cookies per tab or domain.
+    Prevents cross-site tracking through cookies.
+
+privacy.cookie_auto_delete:
+  type: Bool
+  default: false
+  desc: >-
+    Automatically delete cookies when closing tabs.
+    Helps prevent persistent tracking.
+
+privacy.first_party_isolation:
+  type: Bool
+  default: false
+  desc: >-
+    Isolate cookies to first-party domain.
+    Prevents third-party tracking cookies.
+
+privacy.dns_over_https:
+  type: Bool
+  default: false
+  desc: >-
+    Use DNS-over-HTTPS for domain resolution.
+    Encrypts DNS queries to prevent ISP snooping.
+
+privacy.doh_provider:
+  type:
+    name: String
+    valid_values:
+      - cloudflare: Cloudflare DNS (1.1.1.1)
+      - google: Google Public DNS
+      - quad9: Quad9 DNS (security focused)
+      - adguard: AdGuard DNS (blocks ads)
+  default: cloudflare
+  desc: DNS-over-HTTPS provider to use.
+
+privacy.https_upgrade:
+  type: Bool
+  default: false
+  desc: >-
+    Automatically upgrade HTTP connections to HTTPS when available.
+    Enhances security by preferring encrypted connections.
+
+privacy.request_pattern_analysis:
+  type: Bool
+  default: false
+  desc: >-
+    Analyze request patterns for suspicious activity.
+    Warns about potential tracking or data harvesting.
+
+privacy.js_sandbox_enhanced:
+  type: Bool
+  default: false
+  desc: >-
+    Enable enhanced JavaScript sandboxing.
+    Applies stricter Content Security Policies.
+
+privacy.webrtc_protection:
+  type: Bool
+  default: false
+  desc: >-
+    Prevent WebRTC IP leaks.
+    Blocks WebRTC from revealing local IP addresses.
+
+privacy.referrer_policy:
+  type:
+    name: String
+    valid_values:
+      - no-referrer: Never send referrer
+      - no-referrer-when-downgrade: Don't send referrer when downgrading to HTTP
+      - origin: Only send origin (no path)
+      - origin-when-cross-origin: Full referrer for same-origin, origin for cross-origin
+      - same-origin: Only send referrer for same-origin requests
+      - strict-origin: Only send origin, never for HTTP
+      - strict-origin-when-cross-origin: Full for same-origin, origin for cross-origin (default)
+      - unsafe-url: Always send full URL (not recommended)
+  default: strict-origin-when-cross-origin
+  desc: >-
+    Policy for sending HTTP Referrer header.
+    Controls what information is shared with linked sites.

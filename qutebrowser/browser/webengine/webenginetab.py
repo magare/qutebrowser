@@ -18,7 +18,7 @@ from qutebrowser.qt.network import QAuthenticator
 from qutebrowser.qt.webenginecore import QWebEnginePage, QWebEngineScript, QWebEngineHistory
 
 from qutebrowser.config import config
-from qutebrowser.browser import browsertab, eventfilter, shared, webelem, greasemonkey
+from qutebrowser.browser import browsertab, eventfilter, shared, webelem, greasemonkey, privacy
 from qutebrowser.browser.webengine import (webview, webengineelem, tabhistory,
                                            webenginesettings, certificateerror,
                                            webengineinspector)
@@ -1092,12 +1092,37 @@ class _WebEngineScripts(QObject):
         # FIXME:qtwebengine what about subframes=True?
         self._inject_js('js', js_code, subframes=True)
         self._init_stylesheet()
+        
+        # Inject privacy protection scripts
+        self._inject_privacy_scripts()
 
         self._greasemonkey.scripts_reloaded.connect(
             self._inject_all_greasemonkey_scripts)
         self._inject_all_greasemonkey_scripts()
         self._inject_site_specific_quirks()
 
+    def _inject_privacy_scripts(self):
+        """Inject privacy protection scripts if enabled."""
+        try:
+            if not config.val.privacy.enabled:
+                return
+        except:
+            # Privacy settings not available yet
+            return
+            
+        try:
+            import qutebrowser.utils.objreg as objreg
+            privacy_manager = objreg.get('privacy-manager')
+            if privacy_manager:
+                privacy_script = privacy_manager.get_injection_script()
+                if privacy_script:
+                    self._inject_js('privacy', privacy_script, 
+                                  world=QWebEngineScript.ScriptWorldId.MainWorld,
+                                  injection_point=QWebEngineScript.InjectionPoint.DocumentCreation,
+                                  subframes=True)
+        except Exception as e:
+            log.misc.debug(f"Privacy scripts not available: {e}")
+    
     def _init_stylesheet(self):
         """Initialize custom stylesheets.
 

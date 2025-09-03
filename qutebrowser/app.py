@@ -511,6 +511,10 @@ def _init_modules(*, args):
 
     log.init.debug("Initializing Greasemonkey...")
     greasemonkey.init()
+    
+    log.init.debug("Initializing Privacy Manager...")
+    from qutebrowser.browser import privacy
+    privacy.init()
 
     log.init.debug("Misc initialization...")
     macros.init()
